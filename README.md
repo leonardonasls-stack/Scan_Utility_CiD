@@ -57,9 +57,12 @@ Ferramenta desktop desenvolvida em **Python** e **Flet** (Material Design 3 / Fl
 ## 📁 Estrutura do Projeto
 
 ```text
-Bot Varredura - Control ID/
+Scan_Utility_CiD/
 │
-├── AGENTS/                         # Especificações do projeto (PRD, TRD, API, Frontend, Testes, Tarefas)
+├── .github/workflows/ci.yml        # Pipeline CI (ruff, mypy, unittest)
+├── .specify/                       # Constituição e templates do Spec Kit
+├── specs/001-scan-utility-cid/     # Especificação, plano e tarefas (Spec Kit)
+├── AGENTS/                         # Especificações históricas (PRD, TRD, API, etc.)
 ├── backend/                        # Camada de Serviços e Rede (isolada da UI)
 │   ├── core/
 │   │   ├── scanner.py              # Orquestrador assíncrono de varredura (NetworkScanner)
@@ -92,7 +95,9 @@ Bot Varredura - Control ID/
 │   ├── test_document.py            # Geração do PDF interno
 │   └── test_e2e.py                 # Fluxo ponta a ponta contra o servidor mock
 ├── main.py                         # Ponto de entrada da aplicação desktop
-├── requirements.txt                # Dependências Python
+├── pyproject.toml                  # Configurações de ruff e mypy
+├── requirements.txt                # Dependências de runtime
+├── requirements-dev.txt            # Dependências de dev, lint, tipagem e build
 ├── build.ps1                       # Script de compilação PyInstaller (.exe)
 └── README.md                       # Documentação do projeto
 ```
@@ -119,7 +124,11 @@ python -m venv .venv
 
 ### 4. Instalar as dependências
 ```powershell
+# Apenas execução (runtime)
 pip install -r requirements.txt
+
+# Desenvolvimento, testes, lint (ruff/mypy) e build (.exe)
+pip install -r requirements-dev.txt
 ```
 
 | Pacote        | Uso                                         |
@@ -127,7 +136,8 @@ pip install -r requirements.txt
 | `flet`        | Interface gráfica desktop                   |
 | `httpx`       | Cliente HTTP assíncrono para a varredura    |
 | `reportlab`   | Geração do Documento Interno em PDF         |
-| `pyinstaller` | Compilação do executável standalone (.exe)  |
+| `pyinstaller` | Compilação do executável standalone (dev)   |
+| `ruff` / `mypy` | Lint e checagem de tipos (dev)            |
 
 ### 5. Executar a aplicação
 ```powershell
@@ -147,13 +157,25 @@ python main.py
 
 ---
 
-## 🧪 Testes Automatizados
+## 🧪 Testes e Qualidade de Código
 
 ```powershell
+# Suíte de testes unitários, integração e E2E
 python -m unittest discover -s tests -p "test_*.py"
+
+# Lint e checagem de tipos
+ruff check .
+mypy backend/
 ```
 
 Os testes de integração e E2E sobem automaticamente um **servidor mock Control iD** local (`127.0.0.1:8089`), dispensando hardware real.
+
+---
+
+## 🛠️ Troubleshooting e Logs
+
+- Em execução desktop (`--windowed`), os logs de erro e diagnóstico são gravados automaticamente em **`reports/app.log`** (com rotação de até 1 MB e 3 backups).
+- Em caso de falha na resolução ARP ou em callbacks da interface, consulte `reports/app.log` para o stack trace completo.
 
 ---
 
