@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" id="logo-horizontal-dark" viewBox="30 20 440 95" width="100%" height="100%">
+  <defs>
+    <linearGradient id="logoSymbolGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#818cf8" />
+      <stop offset="50%" stop-color="#c084fc" />
+      <stop offset="100%" stop-color="#38bdf8" />
+    </linearGradient>
+  </defs>
+  <g transform="translate(20, 20)" stroke="url(#logoSymbolGrad)" stroke-width="6.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M 84.6 68 L 84.6 30 L 50 10 L 39.6 16 M 34.4 19 L 29.2 22 M 24 25 L 15.4 30 L 15.4 70 L 50 90 L 74.3 76 L 82 76 M 86 76 L 90 76 M 94 76 L 96 76" />
+    <path d="M 36 38 L 48 50 L 36 62 M 52 64 L 66 64" />
+  </g>
+  <text x="140" y="68" font-family="'Fira Code', 'Courier New', monospace" font-size="34" font-weight="600" fill="#f8fafc" letter-spacing="-1">[Leo nascimento]</text>
+  <text x="140" y="98" font-family="'Fira Code', 'Courier New', monospace" font-size="18" font-weight="500" fill="#cbd5e1" letter-spacing="0">desenvolvimento de sistemas</text>
+</svg>

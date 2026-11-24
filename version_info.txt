@@ -15,12 +15,12 @@ VSVersionInfo(
     StringFileInfo([
       StringTable('041604B0', [
         StringStruct('CompanyName', 'LLSystem'),
-        StringStruct('FileDescription', 'SCAN BOT Rede - Varredura de equipamentos Control iD'),
+        StringStruct('FileDescription', 'Scan Utility CiD - Varredura de equipamentos Control iD'),
         StringStruct('FileVersion', '1.0.0.0'),
         StringStruct('InternalName', 'SCAN-BOT-Rede'),
         StringStruct('LegalCopyright', 'Copyright (c) 2026 LLSystem - Desenvolvido por Leonardo Nascimento'),
         StringStruct('OriginalFilename', 'SCAN-BOT-Rede.exe'),
-        StringStruct('ProductName', 'SCAN BOT Rede'),
+        StringStruct('ProductName', 'Scan Utility CiD'),
         StringStruct('ProductVersion', '1.0.0.0')
       ])
     ]),

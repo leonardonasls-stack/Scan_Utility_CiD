@@ -28,6 +28,18 @@ def generate_filename(prefix: str, extension: str) -> str:
     return f"{prefix}_{timestamp}.{extension}"
 
 
+def _sanitize_csv_cell(value: object) -> object:
+    """Protege contra CSV Formula Injection prefixando células que iniciam com =, +, - ou @."""
+    if isinstance(value, str) and value.startswith(("=", "+", "-", "@")):
+        return f"'{value}"
+    return value
+
+
+def _sanitize_csv_row(row: list[object]) -> list[object]:
+    """Aplica sanitização em todas as células de uma linha CSV."""
+    return [_sanitize_csv_cell(cell) for cell in row]
+
+
 def export_to_csv(summary: ScanSummary, file_path: Optional[str] = None) -> str:
     """
     Exporta o resultado da varredura para um arquivo CSV estruturado.
@@ -47,7 +59,7 @@ def export_to_csv(summary: ScanSummary, file_path: Optional[str] = None) -> str:
         writer = csv.writer(csv_file, delimiter=";")
 
         # Cabeçalho Informativo de Resumo
-        writer.writerow(["# RELATORIO DE VARREDURA - SCAN BOT REDE"])
+        writer.writerow(["# RELATORIO DE VARREDURA - SCAN UTILITY CID"])
         writer.writerow(["# Data da Varredura", datetime.now().strftime("%d/%m/%Y %H:%M:%S")])
         writer.writerow(["# Rede Alvo", summary.network_target])
         writer.writerow(["# Total de IPs Varridos", summary.total_scanned])
@@ -71,7 +83,7 @@ def export_to_csv(summary: ScanSummary, file_path: Optional[str] = None) -> str:
         # Linhas de Dispositivos agrupadas hierarquicamente
         for parent, children in grouped:
             parent_role = "Catraca Principal" if "idblock" in parent.model.lower() else "Dispositivo Standalone"
-            writer.writerow([
+            writer.writerow(_sanitize_csv_row([
                 parent.ip,
                 parent.mac,
                 parent.serial_number,
@@ -81,7 +93,7 @@ def export_to_csv(summary: ScanSummary, file_path: Optional[str] = None) -> str:
                 parent.firmware_version,
                 f"{parent.response_time_ms:.1f}",
                 parent.timestamp.strftime("%Y-%m-%d %H:%M:%S")
-            ])
+            ]))
             for child in children:
                 child_role = (
                     f"Leitor Facial (Entrada) -> Catraca {parent.ip}" if child.role == "reader_entry" else (
@@ -90,7 +102,7 @@ def export_to_csv(summary: ScanSummary, file_path: Optional[str] = None) -> str:
                         )
                     )
                 )
-                writer.writerow([
+                writer.writerow(_sanitize_csv_row([
                     f"  ↳ {child.ip}",
                     child.mac,
                     child.serial_number,
@@ -100,7 +112,7 @@ def export_to_csv(summary: ScanSummary, file_path: Optional[str] = None) -> str:
                     child.firmware_version,
                     f"{child.response_time_ms:.1f}",
                     child.timestamp.strftime("%Y-%m-%d %H:%M:%S")
-                ])
+                ]))
 
     return str(target_path.resolve())
 
@@ -143,7 +155,7 @@ def write_scan_log_txt(summary: ScanSummary, file_path: Optional[str] = None) ->
 
     lines = []
     lines.append("=" * 80)
-    lines.append(f" LOG DE AUDITORIA E COLETA DE EQUIPAMENTOS - SCAN BOT REDE")
+    lines.append(f" LOG DE AUDITORIA E COLETA DE EQUIPAMENTOS - SCAN UTILITY CID")
     lines.append("=" * 80)
     lines.append(f"Data e Hora da Execução : {now_str}")
     lines.append(f"Faixa de Rede Alvo      : {summary.network_target}")

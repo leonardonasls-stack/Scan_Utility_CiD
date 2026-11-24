@@ -309,7 +309,7 @@ def generate_internal_document_pdf(
     elements.append(Spacer(1, 24))
     elements.append(HRFlowable(width="100%", thickness=0.5, color=colors.HexColor("#CBD5E1"), spaceAfter=8))
     footer_text = (
-        "<i>Documento emitido automaticamente pelo SCAN BOT Rede. "
+        "<i>Documento emitido automaticamente pelo Scan Utility CiD. "
         "Uso estritamente interno para inventário técnico, conferência e manutenção de ativos. "
         "Não requer assinatura de terceiros.</i>"
     )

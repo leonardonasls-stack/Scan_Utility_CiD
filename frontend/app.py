@@ -1,4 +1,5 @@
 import asyncio
+import os
 import time
 from typing import Optional
 import flet as ft
@@ -26,7 +27,7 @@ from frontend.styles.theme import (
 
 
 class AppState:
-    """Mantém o estado central da aplicação SCAN BOT Rede."""
+    """Mantém o estado central da aplicação Scan Utility CiD."""
     def __init__(self):
         # Puxa as informações da rede local ativa na inicialização
         self.local_ip, self.default_cidr = get_local_network_info()
@@ -50,7 +51,7 @@ def create_app_view(page: ft.Page) -> ft.Control:
         page.overlay.append(snack)
         page.update()
 
-    # 1. Header com Branding SCAN BOT Rede
+    # 1. Header com Branding Scan Utility CiD
     header = create_header(state.local_ip, state.default_cidr)
 
     # 2. Tabela de Dispositivos
@@ -134,7 +135,7 @@ def create_app_view(page: ft.Page) -> ft.Control:
                     ]
                 ),
                 ft.Text(
-                    "SCAN BOT Rede v1.0 • Pronto para Auditoria",
+                    "Scan Utility CiD v1.0 • Pronto para Auditoria",
                     size=11,
                     color=COLOR_TEXT_MUTED
                 )
@@ -152,15 +153,18 @@ def create_app_view(page: ft.Page) -> ft.Control:
                 ft.Divider(height=1, color=COLOR_BORDER),
                 ft.Row(
                     alignment=ft.MainAxisAlignment.CENTER,
-                    spacing=6,
+                    vertical_alignment=ft.CrossAxisAlignment.CENTER,
+                    spacing=8,
                     controls=[
-                        ft.Icon(ft.Icons.CODE_ROUNDED, size=14, color=COLOR_TEXT_MUTED),
-                        ft.Text("Desenvolvido por -", size=11, color=COLOR_TEXT_MUTED),
-                        ft.Text(
-                            "Leonardo Nascimento",
-                            size=11,
-                            weight=ft.FontWeight.W_600,
-                            color=COLOR_PRIMARY
+                        ft.Text("Powered by", size=11, color=COLOR_TEXT_MUTED),
+                        ft.Container(
+                            content=ft.Image(
+                                src=os.path.join(os.path.dirname(__file__), "assets", "logo.svg"),
+                                height=28,
+                                fit="contain",
+                            ),
+                            url="https://leonascimentodev-sooty.vercel.app",
+                            tooltip="Visitar portfólio de Leonardo Nascimento",
                         ),
                     ]
                 ),

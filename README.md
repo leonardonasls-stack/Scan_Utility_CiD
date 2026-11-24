@@ -1,4 +1,4 @@
-# SCAN BOT Rede — Scanner e Inventário de Equipamentos Control iD
+# Scan Utility CiD — Scanner e Inventário de Equipamentos Control iD
 
 ![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)
 ![Flet](https://img.shields.io/badge/UI-Flet%20(Flutter)-02569B?logo=flutter&logoColor=white)
@@ -76,7 +76,7 @@ Bot Varredura - Control ID/
 ├── frontend/                       # Camada Visual Desktop (Flet)
 │   ├── app.py                      # Controlador principal e eventos da interface
 │   ├── components/
-│   │   ├── header.py               # Topbar com branding SCAN BOT Rede
+│   │   ├── header.py               # Topbar com branding Scan Utility CiD
 │   │   ├── controls.py             # CIDR (AUTO/MANUAL), credenciais e botões Iniciar/Cancelar
 │   │   ├── kpi_cards.py            # Totalizador de equipamentos e métricas
 │   │   ├── device_table.py         # Tabela de dispositivos com tags de modelo

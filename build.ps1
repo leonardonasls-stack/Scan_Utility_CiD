@@ -2,7 +2,7 @@
 $ErrorActionPreference = "Stop"
 
 Write-Host "==========================================================" -ForegroundColor Cyan
-Write-Host "     Compilando SCAN BOT Rede com PyInstaller            " -ForegroundColor Cyan
+Write-Host "     Compilando Scan Utility CiD com PyInstaller         " -ForegroundColor Cyan
 Write-Host "==========================================================" -ForegroundColor Cyan
 
 # Garante instalação das dependências

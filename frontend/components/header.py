@@ -10,7 +10,7 @@ from frontend.styles.theme import (
 
 
 class HeaderBar(ft.Container):
-    """Componente superior da aplicação com branding SCAN BOT Rede e status da interface."""
+    """Componente superior da aplicação com branding Scan Utility CiD e status da interface."""
 
     def __init__(self, local_ip: str, default_cidr: str = ""):
         self.local_ip = local_ip
@@ -57,14 +57,14 @@ class HeaderBar(ft.Container):
                                         spacing=8,
                                         controls=[
                                             ft.Text(
-                                                "SCAN BOT",
+                                                "Scan Utility",
                                                 size=20,
                                                 weight=ft.FontWeight.BOLD,
                                                 color=COLOR_TEXT_PRIMARY
                                             ),
                                             ft.Container(
                                                 content=ft.Text(
-                                                    "REDE",
+                                                    "CiD",
                                                     size=10,
                                                     weight=ft.FontWeight.BOLD,
                                                     color=COLOR_PRIMARY
