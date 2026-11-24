@@ -398,8 +398,9 @@ async def probe_control_id(
                 try:
                     payload = resp.json()
                     if isinstance(payload, dict):
-                        inner = payload.get("data") if isinstance(payload.get("data"), dict) else payload
-                        if any(k in inner for k in ("serialNumber", "modelName", "softwareVersion")):
+                        data_val = payload.get("data")
+                        inner = data_val if isinstance(data_val, dict) else payload
+                        if isinstance(inner, dict) and any(k in inner for k in ("serialNumber", "modelName", "softwareVersion")):
                             device_data = inner
                             is_control_id = True
                 except Exception:
