@@ -1,10 +1,13 @@
 import sys
 import os
 import re
+import logging
 import socket
 import struct
 import subprocess
 from typing import Optional
+
+logger = logging.getLogger(__name__)
 
 
 def _get_mac_windows_native(ip: str) -> Optional[str]:
@@ -32,8 +35,8 @@ def _get_mac_windows_native(ip: str) -> Optional[str]:
             mac_str = ":".join(f"{b & 0xFF:02X}" for b in mac_buffer)
             if mac_str != "00:00:00:00:00:00":
                 return mac_str
-    except Exception:
-        pass
+    except Exception as exc:
+        logger.debug("Falha ao resolver MAC via SendARP para %s: %s", ip, exc, exc_info=True)
     return None
 
 
@@ -48,8 +51,8 @@ def _get_mac_arp_command(ip: str) -> Optional[str]:
             mac_raw = match.group(0).upper().replace("-", ":")
             if mac_raw != "00:00:00:00:00:00":
                 return mac_raw
-    except Exception:
-        pass
+    except Exception as exc:
+        logger.debug("Falha ao resolver MAC via comando arp para %s: %s", ip, exc, exc_info=True)
     return None
 
 
@@ -64,8 +67,8 @@ def _get_mac_linux_proc(ip: str) -> Optional[str]:
                         mac_cand = parts[3].upper()
                         if mac_cand != "00:00:00:00:00:00":
                             return mac_cand
-    except Exception:
-        pass
+    except Exception as exc:
+        logger.debug("Falha ao resolver MAC via /proc/net/arp para %s: %s", ip, exc, exc_info=True)
     return None
 
 
