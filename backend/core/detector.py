@@ -1,4 +1,5 @@
 import json
+import asyncio
 import re
 import time
 from typing import Optional, Dict, Any, List, Union
@@ -584,7 +585,7 @@ async def probe_control_id(
     area = _extract_area_info(device_data or {})
 
     # Resolução de MAC: Win32 SendARP tem prioridade absoluta
-    mac = get_mac_for_ip(ip)
+    mac = await asyncio.to_thread(get_mac_for_ip, ip)
     if mac == "N/D" and device_data and "mac" in device_data:
         raw_mac = str(device_data["mac"]).strip().upper()
         if re.match(r"^([0-9A-F]{2}[:-]){5}([0-9A-F]{2})$", raw_mac):

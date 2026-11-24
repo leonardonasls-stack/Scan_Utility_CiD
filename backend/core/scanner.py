@@ -1,5 +1,8 @@
 import asyncio
+import logging
 import time
+
+logger = logging.getLogger(__name__)
 from typing import Callable, Optional, List
 import httpx
 
@@ -36,14 +39,18 @@ class NetworkScanner:
 
         self._cancelled = False
         self._is_running = False
+        self._workers: list[asyncio.Task] = []
 
     @property
     def is_running(self) -> bool:
         return self._is_running
 
     def cancel(self) -> None:
-        """Sinaliza interrupção imediata da varredura."""
+        """Sinaliza interrupção imediata da varredura e cancela workers ativos."""
         self._cancelled = True
+        for worker in self._workers:
+            if not worker.done():
+                worker.cancel()
 
     async def scan(self) -> ScanSummary:
         """
@@ -60,7 +67,6 @@ class NetworkScanner:
         self._cancelled = False
         self._is_running = True
 
-        semaphore = asyncio.Semaphore(self.concurrency)
         start_time = time.perf_counter()
 
         limits = httpx.Limits(
@@ -69,50 +75,63 @@ class NetworkScanner:
         )
         timeout = httpx.Timeout(self.timeout_sec, connect=self.timeout_sec)
 
+        queue: asyncio.Queue[str] = asyncio.Queue()
+        for ip in hosts:
+            queue.put_nowait(ip)
+
         async with httpx.AsyncClient(limits=limits, timeout=timeout) as client:
             async def scan_single_host(ip: str):
                 nonlocal scanned_count
                 if self._cancelled:
                     return
 
-                async with semaphore:
-                    if self._cancelled:
-                        return
-                    device = await probe_control_id(
-                        client=client,
-                        ip=ip,
-                        port=self.port,
-                        timeout_sec=self.timeout_sec,
-                        username=self.username,
-                        password=self.password
-                    )
+                device = await probe_control_id(
+                    client=client,
+                    ip=ip,
+                    port=self.port,
+                    timeout_sec=self.timeout_sec,
+                    username=self.username,
+                    password=self.password
+                )
 
-                    scanned_count += 1
-                    if device:
-                        found_devices.append(device)
-                        if self.on_device_found:
-                            try:
-                                res = self.on_device_found(device)
-                                if asyncio.iscoroutine(res):
-                                    await res
-                            except Exception:
-                                pass
-
-                    if self.on_progress:
+                scanned_count += 1
+                if device:
+                    found_devices.append(device)
+                    if self.on_device_found:
                         try:
-                            res = self.on_progress(scanned_count, total_hosts, ip)
+                            res = self.on_device_found(device)
                             if asyncio.iscoroutine(res):
                                 await res
-                        except Exception:
-                            pass
+                        except Exception as exc:
+                            logger.warning("Erro no callback on_device_found para %s: %s", ip, exc, exc_info=True)
 
-            # Cria todas as tasks
-            tasks = [asyncio.create_task(scan_single_host(ip)) for ip in hosts]
+                if self.on_progress:
+                    try:
+                        res = self.on_progress(scanned_count, total_hosts, ip)
+                        if asyncio.iscoroutine(res):
+                            await res
+                    except Exception as exc:
+                        logger.warning("Erro no callback on_progress para %s: %s", ip, exc, exc_info=True)
+
+            async def worker():
+                while not self._cancelled:
+                    try:
+                        ip = queue.get_nowait()
+                    except asyncio.QueueEmpty:
+                        break
+                    try:
+                        await scan_single_host(ip)
+                    finally:
+                        queue.task_done()
+
+            num_workers = min(self.concurrency, len(hosts)) if hosts else 0
+            self._workers = [asyncio.create_task(worker()) for _ in range(num_workers)]
 
             try:
-                # Executa concorrentemente respeitando o semáforo
-                await asyncio.gather(*tasks, return_exceptions=True)
+                if self._workers:
+                    await asyncio.gather(*self._workers, return_exceptions=True)
             finally:
+                self._workers = []
                 self._is_running = False
 
         duration = time.perf_counter() - start_time
