@@ -18,7 +18,27 @@ dist/
 reports/*.csv
 reports/*.json
 reports/*.pdf
+reports/*.log
 !reports/.gitkeep
+
+# Logs and environment secrets
+*.log
+.env
+.env.*
+!.env.example
+
+# Private keys and code-signing certificates (keep public .cer if tracked)
+*.pfx
+*.p12
+*.key
+*.pem
+
+# Test, lint and typecheck caches
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
 
 # IDE and Editor files
 .vscode/
@@ -32,3 +52,6 @@ ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
 .DS_Store
+
+# AI Agent local config
+.gemini/
