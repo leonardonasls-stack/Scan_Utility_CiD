@@ -1,6 +1,6 @@
 # Cria (uma unica vez) um certificado de assinatura de codigo autoassinado "LLSystem"
 # e o marca como confiavel para o usuario atual. Depois disso, o build.ps1 assina
-# automaticamente o SCAN-BOT-Rede.exe e o Windows passa a exibir "Fornecedor: LLSystem".
+# automaticamente o Scan-Utility-CiD.exe e o Windows passa a exibir "Fornecedor: LLSystem".
 #
 # IMPORTANTE: certificado autoassinado so e reconhecido nas maquinas onde o arquivo
 # LLSystem-CodeSigning.cer for instalado. Para reconhecimento publico em qualquer PC,

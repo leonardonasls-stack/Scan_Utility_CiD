@@ -19,6 +19,7 @@ reports/*.csv
 reports/*.json
 reports/*.pdf
 reports/*.log
+reports/*.txt
 !reports/.gitkeep
 
 # Logs and environment secrets
