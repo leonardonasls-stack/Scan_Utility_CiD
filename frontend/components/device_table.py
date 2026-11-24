@@ -1,16 +1,16 @@
 from typing import List, Optional
+
 import flet as ft
 
 from backend.models.device import ControlIdDevice
-from backend.services.turnstile_linker import link_turnstiles_and_readers, clean_display_area
+from backend.services.turnstile_linker import clean_display_area, link_turnstiles_and_readers
 from frontend.styles.theme import (
-    COLOR_SURFACE,
     COLOR_BORDER,
-    COLOR_TEXT_PRIMARY,
-    COLOR_TEXT_MUTED,
     COLOR_SUCCESS,
-    COLOR_WARNING,
-    get_model_color
+    COLOR_SURFACE,
+    COLOR_TEXT_MUTED,
+    COLOR_TEXT_PRIMARY,
+    get_model_color,
 )
 
 

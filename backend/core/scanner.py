@@ -1,14 +1,15 @@
 import asyncio
 import logging
 import time
+from typing import Callable, List, Optional
 
-logger = logging.getLogger(__name__)
-from typing import Callable, Optional, List
 import httpx
 
-from backend.models.device import ControlIdDevice, ScanSummary
 from backend.core.detector import probe_control_id
 from backend.core.network_utils import get_hosts_in_cidr, validate_cidr
+from backend.models.device import ControlIdDevice, ScanSummary
+
+logger = logging.getLogger(__name__)
 
 
 class NetworkScanner:

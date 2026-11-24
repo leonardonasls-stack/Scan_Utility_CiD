@@ -1,5 +1,6 @@
-from typing import List, Dict, Tuple, Optional
 import re
+from typing import Dict, List, Optional, Tuple
+
 from backend.models.device import ControlIdDevice
 
 
@@ -284,7 +285,7 @@ def link_turnstiles_and_readers(devices: List[ControlIdDevice]) -> List[Tuple[Co
 
         if matched_turnstile:
             o.parent_turnstile_ip = matched_turnstile.ip
-            
+
             # Determina papel (Entrada / Saída) com precisão:
             # 1. Prioridade máxima: sufixo/palavra final do nome do leitor (ex: 'Entrada 1 Saída' -> 'Saída', 'Entrada 1 Entrada' -> 'Entrada')
             # 2. Correspondência por regex de fronteira (\b) no nome do leitor

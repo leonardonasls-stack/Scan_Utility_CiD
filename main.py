@@ -1,8 +1,9 @@
-import os
-import sys
 import logging
+import os
 from logging.handlers import RotatingFileHandler
+
 import flet as ft
+
 from frontend.app import create_app_view
 
 

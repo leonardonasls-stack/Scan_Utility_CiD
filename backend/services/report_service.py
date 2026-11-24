@@ -1,14 +1,13 @@
 import csv
 import json
 import os
-import sys
 import subprocess
+import sys
 from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
 from backend.models.device import ScanSummary
-
 from backend.services.turnstile_linker import link_turnstiles_and_readers
 
 # Diretório padrão para salvar os relatórios
@@ -155,7 +154,7 @@ def write_scan_log_txt(summary: ScanSummary, file_path: Optional[str] = None) ->
 
     lines = []
     lines.append("=" * 80)
-    lines.append(f" LOG DE AUDITORIA E COLETA DE EQUIPAMENTOS - SCAN UTILITY CID")
+    lines.append(" LOG DE AUDITORIA E COLETA DE EQUIPAMENTOS - SCAN UTILITY CID")
     lines.append("=" * 80)
     lines.append(f"Data e Hora da Execução : {now_str}")
     lines.append(f"Faixa de Rede Alvo      : {summary.network_target}")
@@ -209,7 +208,7 @@ def write_scan_log_txt(summary: ScanSummary, file_path: Optional[str] = None) ->
                     lines.append(f"          Área / Portal  : {child.area}")
                     lines.append(f"          Versão Firmware: {child.firmware_version}")
                     lines.append(f"          Latência / Ping: {child.response_time_ms:.1f} ms")
-                    
+
                     c_raw_devs = child.raw_info.get("_raw_devices") if child.raw_info else None
                     if c_raw_devs:
                         lines.append(f"          • Dispositivos (devices): {json.dumps(c_raw_devs, ensure_ascii=False)}")

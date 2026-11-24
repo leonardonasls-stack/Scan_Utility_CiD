@@ -1,20 +1,13 @@
-from datetime import datetime
 from pathlib import Path
 from typing import Optional
+
 from reportlab.lib import colors
 from reportlab.lib.pagesizes import A4
-from reportlab.lib.styles import getSampleStyleSheet, ParagraphStyle
-from reportlab.platypus import (
-    SimpleDocTemplate,
-    Paragraph,
-    Spacer,
-    Table,
-    TableStyle,
-    HRFlowable
-)
+from reportlab.lib.styles import ParagraphStyle, getSampleStyleSheet
+from reportlab.platypus import HRFlowable, Paragraph, SimpleDocTemplate, Spacer, Table, TableStyle
 
-from backend.models.device import ScanSummary, DocumentMetadata
-from backend.services.report_service import get_reports_dir, generate_filename
+from backend.models.device import DocumentMetadata, ScanSummary
+from backend.services.report_service import generate_filename, get_reports_dir
 
 
 def generate_internal_document_pdf(
@@ -219,7 +212,7 @@ def generate_internal_document_pdf(
     elements.append(Paragraph("<b>RELAÇÃO DETALHADA DE EQUIPAMENTOS IDENTIFICADOS</b>", label_style))
     elements.append(Spacer(1, 6))
 
-    from backend.services.turnstile_linker import link_turnstiles_and_readers, clean_display_area
+    from backend.services.turnstile_linker import clean_display_area, link_turnstiles_and_readers
     grouped_pdf = link_turnstiles_and_readers(summary.devices)
 
     table_data = [
@@ -247,7 +240,7 @@ def generate_internal_document_pdf(
     else:
         parent_counter = 1
         for parent, children in grouped_pdf:
-            is_turnstile = "idblock" in parent.model.lower()
+            "idblock" in parent.model.lower()
             parent_model_str = f"<b>{parent.model}</b>"
             clean_parent_area = clean_display_area(parent)
 

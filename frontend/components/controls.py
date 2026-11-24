@@ -1,15 +1,8 @@
-from typing import Callable, Optional
+from typing import Callable
+
 import flet as ft
 
-from frontend.styles.theme import (
-    COLOR_PRIMARY,
-    COLOR_SURFACE,
-    COLOR_BORDER,
-    COLOR_TEXT_PRIMARY,
-    COLOR_DANGER,
-    COLOR_TEXT_MUTED,
-    COLOR_SUCCESS
-)
+from frontend.styles.theme import COLOR_BORDER, COLOR_DANGER, COLOR_PRIMARY, COLOR_SURFACE, COLOR_TEXT_MUTED
 
 
 class ControlsBar(ft.Container):

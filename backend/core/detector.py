@@ -1,12 +1,13 @@
-import json
 import asyncio
+import json
 import re
 import time
-from typing import Optional, Dict, Any, List, Union
+from typing import Any, Dict, List, Optional, Union
+
 import httpx
 
-from backend.models.device import ControlIdDevice
 from backend.core.arp_helper import get_mac_for_ip
+from backend.models.device import ControlIdDevice
 
 # Endpoints conhecidos da Control iD
 ENDPOINT_PRIMARY = "/system_information.fcgi"
@@ -160,7 +161,7 @@ def _extract_model(data: Dict[str, Any], html_content: Optional[Union[str, List[
                 catra_cfg = cfg.get("catra")
                 if isinstance(catra_cfg, dict) and any(catra_cfg.get(k) is not None for k in ("gateway", "anti_passback", "daily_reset")):
                     has_catra_evidence = True
-            
+
             # Checa se nas configurações ou no nome do dispositivo há menção explícita de catraca/idblock
             dev_name = str(data.get("device_name") or data.get("name") or "")
             if any(w in dev_name.lower() for w in ("catraca", "turnstile", "idblock")):
@@ -456,7 +457,7 @@ async def probe_control_id(
 
     # 6. Autenticação e extração avançada de metadados
     serial = _extract_serial(device_data) if device_data else None
-    current_model = _extract_model(device_data or {}, html_sources)
+    _extract_model(device_data or {}, html_sources)
     has_credentials = bool(username or password)
 
     if has_credentials:
@@ -512,7 +513,7 @@ async def probe_control_id(
                 # 6c. Consulta objetos de Áreas e Portais vinculados via /load_objects.fcgi
                 try:
                     load_url = f"{base_url}{ENDPOINT_LOAD_OBJECTS}?session={session}"
-                    
+
                     # Carrega as áreas cadastradas
                     resp_areas = await client.post(load_url, json={"object": "areas"}, timeout=timeout_sec)
                     if resp_areas.status_code == 200:

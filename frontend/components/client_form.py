@@ -1,14 +1,15 @@
-from typing import Callable, Optional
+from typing import Callable
+
 import flet as ft
 
 from backend.models.device import DocumentMetadata
 from frontend.styles.theme import (
-    COLOR_SURFACE,
     COLOR_BORDER,
     COLOR_PRIMARY,
     COLOR_SUCCESS,
+    COLOR_SURFACE,
+    COLOR_TEXT_MUTED,
     COLOR_TEXT_PRIMARY,
-    COLOR_TEXT_MUTED
 )
 
 

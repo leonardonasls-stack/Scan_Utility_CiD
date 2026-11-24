@@ -2,7 +2,7 @@ import os
 import unittest
 from datetime import datetime
 
-from backend.models.device import ControlIdDevice, ScanSummary, DocumentMetadata
+from backend.models.device import ControlIdDevice, DocumentMetadata, ScanSummary
 from backend.services.document_service import generate_internal_document_pdf
 
 

@@ -1,11 +1,12 @@
 import flet as ft
+
 from frontend.styles.theme import (
-    COLOR_PRIMARY,
-    COLOR_SURFACE,
     COLOR_BORDER,
-    COLOR_TEXT_PRIMARY,
+    COLOR_PRIMARY,
+    COLOR_SUCCESS,
+    COLOR_SURFACE,
     COLOR_TEXT_MUTED,
-    COLOR_SUCCESS
+    COLOR_TEXT_PRIMARY,
 )
 
 

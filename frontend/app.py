@@ -1,28 +1,28 @@
-import asyncio
 import os
 import time
 from typing import Optional
+
 import flet as ft
 
-from backend.models.device import ScanSummary, ControlIdDevice, DocumentMetadata
 from backend.core.network_utils import get_local_network_info, validate_cidr
 from backend.core.scanner import NetworkScanner
-from backend.services.report_service import export_to_csv, export_to_json, open_reports_folder, write_scan_log_txt
+from backend.models.device import ControlIdDevice, ScanSummary
 from backend.services.document_service import generate_internal_document_pdf
-from frontend.components.header import create_header
-from frontend.components.controls import ControlsBar
-from frontend.components.kpi_cards import KPICards
-from frontend.components.device_table import DeviceTable
+from backend.services.report_service import export_to_csv, export_to_json, open_reports_folder, write_scan_log_txt
 from frontend.components.client_form import ClientForm
+from frontend.components.controls import ControlsBar
+from frontend.components.device_table import DeviceTable
+from frontend.components.header import create_header
+from frontend.components.kpi_cards import KPICards
 from frontend.styles.theme import (
     COLOR_BG_DARK,
-    COLOR_SURFACE,
     COLOR_BORDER,
+    COLOR_DANGER,
     COLOR_PRIMARY,
     COLOR_SUCCESS,
-    COLOR_DANGER,
+    COLOR_SURFACE,
     COLOR_TEXT_MUTED,
-    get_model_color
+    get_model_color,
 )
 
 
@@ -230,7 +230,7 @@ def create_app_view(page: ft.Page) -> ft.Control:
 
         def on_device_found(dev: ControlIdDevice):
             device_table.add_device(dev)
-            elapsed = time.perf_counter() - state.start_time
+            time.perf_counter() - state.start_time
             kpi_cards.txt_total_found.value = str(len(device_table.devices))
             kpi_cards.txt_total_found.update()
 
@@ -337,8 +337,8 @@ def create_app_view(page: ft.Page) -> ft.Control:
             return
 
         metadata = client_form.get_metadata()
-        total_devices = len(device_table.devices)
-        idfaces_count = sum(1 for d in device_table.devices if "face" in d.model.lower())
+        len(device_table.devices)
+        sum(1 for d in device_table.devices if "face" in d.model.lower())
 
         # Gerenciamento de seleção dos equipamentos para o documento
         # Por padrão todos os equipamentos descobertos começam selecionados

@@ -1,8 +1,9 @@
 import asyncio
 import os
 import unittest
+
 from backend.core.scanner import NetworkScanner
-from backend.services.report_service import export_to_csv, export_to_json, get_reports_dir, write_scan_log_txt
+from backend.services.report_service import export_to_csv, export_to_json, write_scan_log_txt
 from tests.mock_control_id_server import MockServerThread
 
 

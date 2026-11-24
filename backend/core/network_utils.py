@@ -1,6 +1,6 @@
 import ipaddress
 import socket
-from typing import Tuple, List, Optional
+from typing import List, Tuple
 
 
 def get_local_ip() -> str:

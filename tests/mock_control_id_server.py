@@ -3,7 +3,7 @@ import json
 import socketserver
 import threading
 import time
-from urllib.parse import urlparse, parse_qs
+from urllib.parse import parse_qs, urlparse
 
 
 class MockControlIdHandler(http.server.BaseHTTPRequestHandler):
@@ -49,7 +49,7 @@ class MockControlIdHandler(http.server.BaseHTTPRequestHandler):
             return
 
         if path == "/system_information.fcgi":
-            session = query.get("session", [None])[0]
+            query.get("session", [None])[0]
             # Simula retorno autenticado
             data = {
                 "serial": "100200300400500",

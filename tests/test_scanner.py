@@ -1,5 +1,6 @@
 import asyncio
 import unittest
+
 from backend.core.scanner import NetworkScanner
 from tests.mock_control_id_server import MockServerThread
 

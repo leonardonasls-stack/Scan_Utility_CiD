@@ -3,19 +3,18 @@ import os
 import unittest
 from datetime import datetime
 
-from backend.models.device import ControlIdDevice, ScanSummary
+import httpx
+
 from backend.core.arp_helper import get_mac_for_ip
+from backend.core.detector import _extract_model, login_control_id, probe_control_id
 from backend.core.network_utils import (
-    get_local_ip,
+    get_hosts_in_cidr,
     get_local_network_info,
     validate_cidr,
-    get_hosts_in_cidr,
 )
-from backend.core.detector import probe_control_id, login_control_id, _extract_model
-from backend.core.scanner import NetworkScanner
+from backend.models.device import ControlIdDevice, ScanSummary
 from backend.services.report_service import export_to_csv, export_to_json
 from tests.mock_control_id_server import MockServerThread
-import httpx
 
 
 class TestBackend(unittest.TestCase):
