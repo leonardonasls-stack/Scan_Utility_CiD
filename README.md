@@ -190,7 +190,7 @@ O script executa três etapas:
 2. Roda a suíte de testes.
 3. Gera o executável único com PyInstaller (`--onefile --windowed`).
 
-Saída: `dist/SCAN-BOT-Rede.exe`
+Saída: `dist/Scan-Utility-CiD.exe`
 
 ---
 

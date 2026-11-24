@@ -1,4 +1,4 @@
-# Script PowerShell para geração do executável Standalone Windows
+﻿# Script PowerShell para geração do executável Standalone Windows
 $ErrorActionPreference = "Stop"
 
 Write-Host "==========================================================" -ForegroundColor Cyan
@@ -22,7 +22,7 @@ if ($LASTEXITCODE -ne 0) { throw "Falha ao empacotar o cliente Flet." }
 # Executa o PyInstaller (version_info.txt define o fornecedor LLSystem nos metadados)
 Write-Host "[3/4] Gerando executável único (.exe) com PyInstaller..." -ForegroundColor Yellow
 python -m PyInstaller --noconfirm --onefile --windowed `
-    --name "SCAN-BOT-Rede" `
+    --name "Scan-Utility-CiD" `
     --version-file "version_info.txt" `
     --add-data "backend;backend" `
     --add-data "frontend;frontend" `
@@ -35,7 +35,7 @@ python -m PyInstaller --noconfirm --onefile --windowed `
 
 # Assina digitalmente o executável para o Windows exibir "Fornecedor: LLSystem"
 Write-Host "[4/4] Assinando digitalmente o executável (LLSystem)..." -ForegroundColor Yellow
-$exePath = "dist\SCAN-BOT-Rede.exe"
+$exePath = "dist\Scan-Utility-CiD.exe"
 $cert = Get-ChildItem Cert:\CurrentUser\My -CodeSigningCert |
     Where-Object { $_.Subject -like "CN=LLSystem*" -and $_.NotAfter -gt (Get-Date) } |
     Sort-Object NotAfter -Descending |
@@ -56,5 +56,5 @@ if ($cert) {
 }
 
 Write-Host "==========================================================" -ForegroundColor Green
-Write-Host "  Sucesso! Executável único gerado: dist/SCAN-BOT-Rede.exe " -ForegroundColor Green
+Write-Host "  Sucesso! Executável único gerado: dist/Scan-Utility-CiD.exe " -ForegroundColor Green
 Write-Host "==========================================================" -ForegroundColor Green
