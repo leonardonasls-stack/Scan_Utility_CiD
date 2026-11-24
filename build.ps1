@@ -1,4 +1,4 @@
-﻿# Script PowerShell para geração do executável Standalone Windows
+# Script PowerShell para geração do executável Standalone Windows
 $ErrorActionPreference = "Stop"
 
 Write-Host "==========================================================" -ForegroundColor Cyan
